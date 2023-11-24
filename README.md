@@ -8,23 +8,22 @@ git clone git@github.com:BlackGlory/hallu.git
 ```
 
 ## 配置
-打开根目录下的`config.ts`文件, 你需要自行实现文件中的`getCookies`和`notify`函数.
+打开根目录下的`config.ts`文件, 你需要修改文件中的`getCookies`和`notify`函数.
 
 ### getCookies
 ```ts
 function getCookies(domain: string): Awaitable<string | null>
 ```
 
-只有在你的用户脚本需要注入Cookies的情况下, 你才需要实现它.
-该函数的返回值是可选的, 默认实现为在所有情况下返回`null`(不使用Cookies).
+该函数为用户脚本发出的HTTP请求填充Cookies标头.
+只有在你的用户脚本需要注入Cookies标头的情况下, 才需要实现它.
 
 ### notify
 ```ts
 function notify(notifications: INotification[]): Awaitable<void>
 ```
 
-所有被决定发送的通知都会传至此函数.
-通过编写你自己的实现, 你想把通知发到哪里都可以.
+该函数发出/转发用户脚本提交的通知.
 将通知发送到IM或电子邮箱是常见的选择, 利用类似[Apprise]的服务可以减轻实现此类通知的难度.
 如果你只需要在单机上生成和接收通知, 那么也可以选择借助[deno_notify]等本机模块弹出本机通知.
 

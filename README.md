@@ -8,7 +8,7 @@ git clone git@github.com:BlackGlory/hallu.git
 ```
 
 ## 配置
-找到`src/config.ts`文件, 你需要在此处手动实现`getCookies`和`notify`方法.
+打开根目录下的`config.ts`文件, 你需要自行实现文件中的`getCookies`和`notify`函数.
 
 ### getCookies
 ```ts
@@ -26,12 +26,10 @@ function notify(notifications: INotification[]): Awaitable<void>
 所有被决定发送的通知都会传至此函数.
 通过编写你自己的实现, 你想把通知发到哪里都可以.
 将通知发送到IM或电子邮箱是常见的选择, 利用类似[Apprise]的服务可以减轻实现此类通知的难度.
-
-如果你只需要在单机上生成和接收通知, 那么也可以选择直接通过操作系统的API弹出通知,
-这也是我们在`config.ts`里提供的默认实现.
-默认实现只支持非常有限的通知功能, 所以你很可能会想要修改它.
+如果你只需要在单机上生成和接收通知, 那么也可以选择借助[deno_notify]等本机模块弹出本机通知.
 
 [Apprise]: https://github.com/caronc/apprise-api
+[deno_notify]: https://github.com/Pandawan/deno_notify
 
 作为后备选项, 我们还提供一个名为Inbox的自托管解决方案, 在你不想走简单路径的情况下, 可以尝试一下它.
 作为自托管解决方案, Inbox需要你有一台可以在公网访问的服务器.

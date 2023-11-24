@@ -9,12 +9,14 @@ export async function start(
   , once = false
   , ignoreInitialCommit = true
   , ignoreStartupCommit = false
+  , storage
   }: {
     id?: string
     interval?: number
     once?: boolean
     ignoreInitialCommit?: boolean
     ignoreStartupCommit?: boolean
+    storage?: string
   } = {}
 ): Promise<void> {
   const result = await script.fn({ fetch })

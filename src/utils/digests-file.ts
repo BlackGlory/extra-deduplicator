@@ -2,7 +2,7 @@ import { assert } from 'https://esm.sh/@blackglory/prelude@0.3.4'
 import { last, isntEmptyArray, isntNull } from 'https://esm.sh/extra-utils@5.5.2'
 import * as fs from 'https://deno.land/std@0.207.0/fs/mod.ts'
 
-export class RecordsFile {
+export class DigestsFile {
   size: number | null = null
 
   constructor(

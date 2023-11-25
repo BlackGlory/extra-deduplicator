@@ -14,5 +14,4 @@ start(subscribeRSS('https://news.ycombinator.com/rss'))
 start(watchPageChanges({
   name: 'IP Address'
 , url: 'https://icanhazip.com/'
-, selector: 'body'
 }))

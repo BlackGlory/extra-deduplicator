@@ -9,11 +9,11 @@ import { updateScript } from '@utils/update-script.ts'
 const filenames = await pipe(
   getScriptsRoot()
 , findAllFilenames
-, iter => filterAsync(iter, isTypeScriptFile)
+, iter => filterAsync(iter, isScriptFile)
 , toArrayAsync
 )
 await each(filenames, updateScript)
 
-function isTypeScriptFile(filename: string): boolean {
-  return /.m?tsx?/.test(path.extname(filename))
+function isScriptFile(filename: string): boolean {
+  return /.m?[j|t]sx?/.test(path.extname(filename))
 }

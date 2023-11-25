@@ -5,6 +5,6 @@ export default config({
     return null
   }
 , notify(notifications) {
-    notifications.forEach(console.info)
+    notifications.forEach(notification => console.info(notification))
   }
 })

@@ -1,4 +1,4 @@
-import * as path from 'https://deno.land/std@0.207.0/path/mod.ts'
+import * as path from 'https://deno.land/std@0.208.0/path/mod.ts'
 
 /**
  * Deno运行时无法分辨项目是否经过编译, 在此通过检查可执行文件的名称来判断.

@@ -1,5 +1,5 @@
-import * as path from 'https://deno.land/std@0.207.0/path/mod.ts'
-import { sha1 } from 'https://esm.sh/extra-compatible@0.2.2'
+import * as path from 'https://deno.land/std@0.208.0/path/mod.ts'
+import { sha1 } from 'npm:extra-compatible@^0.2.2'
 import { isCompiled } from '@utils/is-compiled.ts'
 
 export function getAppRoot(): string {

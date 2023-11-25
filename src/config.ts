@@ -1,4 +1,4 @@
-import { Awaitable, NonEmptyArray } from 'https://esm.sh/@blackglory/prelude@0.3.4'
+import { Awaitable, NonEmptyArray } from 'npm:@blackglory/prelude@^0.3.4'
 import { INotification } from '@src/script.ts'
 
 interface IConfig {

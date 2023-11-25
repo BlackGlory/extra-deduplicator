@@ -1,5 +1,5 @@
-import { assert } from 'https://esm.sh/@blackglory/prelude@0.3.4'
-import { Mutex } from 'https://esm.sh/extra-promise@6.0.8'
+import { assert } from 'npm:@blackglory/prelude@^0.3.4'
+import { Mutex } from 'npm:extra-promise@^6.0.8'
 
 export class MutexHub {
   private keyToMutex = new Map<string, Mutex>()

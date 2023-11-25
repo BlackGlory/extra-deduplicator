@@ -1,4 +1,4 @@
-import { isURLString } from 'https://esm.sh/extra-utils@5.5.2'
+import { isURLString } from 'npm:extra-utils@^5.5.2'
 
 export interface Metadata {
   name: string | null

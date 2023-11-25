@@ -1,7 +1,7 @@
-import { toArray, zip, difference, uniq } from 'https://esm.sh/iterable-operator@4.0.6'
-import { isntEmptyArray, last } from 'https://esm.sh/extra-utils@5.5.2'
-import { map } from 'https://esm.sh/extra-promise@6.0.8'
-import { sha256 } from 'https://esm.sh/extra-compatible@0.2.2'
+import { toArray, zip, difference, uniq } from 'npm:iterable-operator@^4.0.6'
+import { isntEmptyArray, last } from 'npm:extra-utils@^5.5.2'
+import { map } from 'npm:extra-promise@^6.0.8'
+import { sha256 } from 'npm:extra-compatible@^0.2.2'
 import { DigestsFile } from '@utils/digests-file.ts'
 import { INotification } from "@src/script.ts";
 import { storageMutexHub } from '@utils/storage-mutex-hub.ts'

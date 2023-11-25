@@ -1,6 +1,6 @@
 import { parseMetadata } from '@utils/metadata.ts'
-import { pass } from 'https://esm.sh/@blackglory/prelude@0.3.4'
-import { ok, toText } from 'https://esm.sh/extra-response@0.5.2'
+import { pass } from 'npm:@blackglory/prelude@^0.3.4'
+import { ok, toText } from 'npm:extra-response@^0.5.2'
 
 export async function updateScript(filename: string): Promise<boolean> {
   const text = await Deno.readTextFile(filename)

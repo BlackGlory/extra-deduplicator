@@ -12,7 +12,7 @@ start(halluStartup(), {
 start(subscribeRSS('https://news.ycombinator.com/rss'))
 
 start(watchPageChanges({
-  name: 'Hacker News'
-, url: 'https://news.ycombinator.com/'
+  name: 'IP Address'
+, url: 'https://icanhazip.com/'
 , selector: 'body'
 }))

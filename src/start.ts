@@ -25,8 +25,8 @@ export async function start<Options extends IOptions>(
   , storage = 'memory<TODO>'
   }: IStartOptions = {}
 ): Promise<void> {
-  do {
-    // 用户脚本因为网络问题而出现错误的情况非常普遍, 有必要捕获错误防止崩溃.
+  while (true) {
+    // 用户脚本因为网络问题而抛出错误的情况非常普遍, 有必要捕获错误和重试.
     await retryUntil(
       anyOf(
         notRetryOnCommonFatalErrors
@@ -43,8 +43,10 @@ export async function start<Options extends IOptions>(
       })
     )
 
+    if (once) break
+
     await delay(interval)
-  } while (!once)
+  }
 
   async function handleValue(value: ScriptValue<Options>): Promise<void> {
     switch (script.options.filter) {

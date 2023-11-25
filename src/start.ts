@@ -1,11 +1,19 @@
 import ms from 'npm:ms@^2.1.3'
-import { isAsyncIterable, isIterable, isArray, isntEmptyArray } from 'npm:@blackglory/prelude@^0.3.4'
+import { Awaitable, isAsyncIterable, isIterable, isArray, isntEmptyArray } from 'npm:@blackglory/prelude@^0.3.4'
 import { isObservable } from 'npm:rxjs@^7.8.1'
 import { delay } from 'npm:extra-promise@^6.0.8'
 import { retryUntil, anyOf, notRetryOnCommonFatalErrors, exponentialBackoff, tap } from 'npm:extra-retry@^0.4.3'
-import { INotification, IScript, IOptions, NotificationFilter, ScriptReturnValue } from '@src/script.ts'
+import { INotification, IScript, IOptions, NotificationFilter, ScriptResult, ScriptValue } from '@src/script.ts'
 import { findUnrecordedNotifications, equalsLatestDigest } from '@utils/find-unrecorded-notifications.ts'
 import config from '@root/config.ts'
+
+interface IStartOptions {
+  interval?: number
+  once?: boolean
+  ignoreInitialCommit?: boolean
+  ignoreStartupCommit?: boolean
+  storage?: string
+}
 
 export async function start<Options extends IOptions>(
   script: IScript<Options>
@@ -15,13 +23,7 @@ export async function start<Options extends IOptions>(
   , ignoreInitialCommit = true
   , ignoreStartupCommit = false
   , storage = 'memory<TODO>'
-  }: {
-    interval?: number
-    once?: boolean
-    ignoreInitialCommit?: boolean
-    ignoreStartupCommit?: boolean
-    storage?: string
-  } = {}
+  }: IStartOptions = {}
 ): Promise<void> {
   do {
     // 用户脚本因为网络问题而出现错误的情况非常普遍, 有必要捕获错误防止崩溃.
@@ -36,35 +38,18 @@ export async function start<Options extends IOptions>(
         })
       )
     , (async () => {
-        const result = await script.fn({ fetch })
-
-        if (isIterable(result) || isAsyncIterable(result)) {
-          for await (const value of result) {
-            await handleValue(value)
-          }
-        } else if (isObservable(result)) {
-          await new Promise<void>((resolve, reject) => {
-            result.subscribe({
-              async next(value): Promise<void> {
-                await handleValue(value)
-              }
-            , error: reject
-            , complete: resolve
-            })
-          })
-        } else {
-          await handleValue(result)
-        }
+        const result = script.fn({ fetch })
+        await handleResult(result, handleValue)
       })
     )
 
     await delay(interval)
   } while (!once)
 
-  async function handleValue(value: ScriptReturnValue<Options>): Promise<void> {
+  async function handleValue(value: ScriptValue<Options>): Promise<void> {
     switch (script.options.filter) {
       case NotificationFilter.Passthrough: {
-        const notifications = normalize(value)
+        const notifications = normalizeValue(value)
 
         if (isntEmptyArray(notifications)) {
           await config.notify(notifications)
@@ -73,7 +58,7 @@ export async function start<Options extends IOptions>(
         break
       }
       case NotificationFilter.KeepAll: {
-        const notifications = normalize(value)
+        const notifications = normalizeValue(value)
 
         if (isntEmptyArray(notifications)) {
           await findUnrecordedNotifications(notifications, storage)
@@ -108,11 +93,48 @@ export async function start<Options extends IOptions>(
         break
       }
     }
-
-    function normalize<T>(value: T | T[]): T[] {
-      return isArray(value)
-           ? value
-           : [value]
-    }
   }
+}
+
+export async function test<Options extends IOptions>(
+  script: IScript<Options>
+, _: IStartOptions
+): Promise<void> {
+  const result = script.fn({ fetch })
+  await handleResult(result, handleValue)
+
+  function handleValue(value: ScriptValue<Options>): void {
+    const notifications = normalizeValue(value)
+
+    console.debug(notifications)
+  }
+}
+
+async function handleResult<Options extends IOptions>(
+  result: ScriptResult<Options>
+, handleValue: (value: ScriptValue<Options>) => Awaitable<void>
+): Promise<void> {
+  if (isIterable(result) || isAsyncIterable(result)) {
+    for await (const value of result) {
+      await handleValue(value)
+    }
+  } else if (isObservable(result)) {
+    await new Promise<void>((resolve, reject) => {
+      result.subscribe({
+        async next(value): Promise<void> {
+          await handleValue(value)
+        }
+      , error: reject
+      , complete: resolve
+      })
+    })
+  } else {
+    await handleValue(await result)
+  }
+}
+
+function normalizeValue<T>(value: T | T[]): T[] {
+  return isArray(value)
+       ? value
+       : [value]
 }

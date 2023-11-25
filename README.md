@@ -41,7 +41,9 @@ function notify(notifications: INotification[]): Awaitable<void>
 
 例子:
 ```ts
-import { start } from '@src/start.ts'
+// start函数用于启动用户脚本, test函数用于测试用户脚本, 两个函数的参数相同, 只需要替换名称就可以相互切换.
+// test函数只会运行用户脚本一次, 忽略所有的启动参数, 通知将在命令行输出而不是传给notify函数.
+import { start, test } from '@src/start.ts'
 import startup from '@scripts/startup.ts'
 import subscribeRSS from '@scripts/subscribe-rss.ts'
 import watchPageChanges from '@scripts/watch-page-changes.ts'

@@ -1,4 +1,4 @@
-import { start } from '@src/start.ts'
+import { start, test } from '@src/start.ts'
 import halluStartup from '@scripts/hallu-startup.ts'
 import subscribeRSS from '@scripts/subscribe-rss.ts'
 import watchPageChanges from '@scripts/watch-page-changes.ts'

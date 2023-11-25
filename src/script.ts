@@ -41,24 +41,25 @@ export enum NotificationFilter {
 }
 
 export interface IScript<Options extends IOptions = IOptions> {
-  fn: (context: IContext) => IReturnValue<Options['filter']>
+  fn: (context: IContext) => Wrapped<ScriptReturnValue<Options>>
   options: Options
 }
 
-export type IReturnValue<Filter extends NotificationFilter> =
-| Awaitable<Notification<Filter>>
-| Observable<Notification<Filter>>
-| AsyncIterable<Notification<Filter>>
+type Wrapped<T> =
+| Awaitable<T>
+| Observable<T>
+| Iterable<T>
+| AsyncIterable<T>
 
-type Notification<Filter extends NotificationFilter> = {
+export type ScriptReturnValue<Options extends IOptions> = {
   [NotificationFilter.Passthrough]: INotification | INotification[]
   [NotificationFilter.KeepAll]: INotification | INotification[]
   [NotificationFilter.KeepDiff]: INotification[]
   [NotificationFilter.KeepLatestDiff]: INotification
-}[Filter]
+}[Options['filter']]
 
 export function script<Args extends unknown[], Options extends IOptions>(
-  fn: (context: IContext, ...args: Args) => IReturnValue<Options['filter']>
+  fn: (context: IContext, ...args: Args) => Wrapped<ScriptReturnValue<Options>>
 , options: Options
 ): (...args: Args) => IScript<Options> {
   return (...args) => ({

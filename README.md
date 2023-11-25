@@ -8,9 +8,10 @@ git clone git@github.com:BlackGlory/hallu.git
 ```
 
 ## 配置
-打开根目录下的`config.ts`文件, 你需要修改文件中的`getCookies`和`notify`函数.
+### `config.ts`
+根目录下的`config.ts`文件用于项目的全局配置, 你需要修改文件中的`getCookies`和`notify`函数.
 
-### getCookies
+#### getCookies
 ```ts
 function getCookies(domain: string): Awaitable<string | null>
 ```
@@ -18,7 +19,7 @@ function getCookies(domain: string): Awaitable<string | null>
 该函数为用户脚本发出的HTTP请求填充Cookies标头.
 只有在你的用户脚本需要注入Cookies标头的情况下, 才需要实现它.
 
-### notify
+#### notify
 ```ts
 function notify(notifications: INotification[]): Awaitable<void>
 ```
@@ -35,6 +36,31 @@ function notify(notifications: INotification[]): Awaitable<void>
 为防止中间人攻击, 你最好有一个域名, 以便开启SSL.
 如果你有一台长时间运行的家庭设备, 可以尝试通过ngrok和ZeroTier这样的内网穿透方案来替代.
 
+### `main.ts`
+根目录下的`main.ts`文件用于项目启动, 编辑该文件以决定需要启用哪些用户脚本.
+
+例子:
+```ts
+import { start } from '@src/start.ts'
+import startup from '@scripts/startup.ts'
+import subscribeRSS from '@scripts/subscribe-rss.ts'
+import watchPageChanges from '@scripts/watch-page-changes.ts'
+
+start(startup(), {
+  once: true
+, ignoreInitialCommit: false
+, ignoreStartupCommit: false
+})
+
+start(subscribeRSS('https://news.ycombinator.com/rss'))
+
+start(watchPageChanges({
+  name: 'Hacker News'
+, url: 'https://news.ycombinator.com/'
+, selector: 'body'
+}))
+```
+
 ## 使用
 ```sh
 # 以开发模式启动Hallu
@@ -45,9 +71,6 @@ deno task build
 
 # 启动可执行文件
 deno task start
-
-# 试运行用户脚本
-deno task test <SCRIPT_FILENAME>
 
 # 更新用户脚本(基于用户脚本的元数据`@update-url`)
 deno task update <SCRIPT_FILENAME>...
@@ -65,6 +88,7 @@ deno clean-all
 ## 概念
 ### 用户脚本 Script
 用户脚本是一个ESM模块, 模块的默认导出是一个被`script`函数包装过的函数.
+你可以通过函数参数为用户脚本添加配置项, 以重用用户脚本.
 
 学习编写用户脚本最好的方式是阅读已有的例子, 你可以在存储库的scripts目录中找到官方提供的脚本.
 

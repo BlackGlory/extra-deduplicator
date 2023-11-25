@@ -5,6 +5,7 @@ import { sha256 } from 'https://esm.sh/extra-compatible@0.2.1'
 import { DigestsFile } from '@utils/digests-file.ts'
 import { INotification } from "@src/script.ts";
 import { storageMutexHub } from '@utils/storage-mutex-hub.ts'
+import { getNotificationDigestsPath } from '@utils/paths.ts'
 
 export async function findUnrecordedNotifications(
   storage: string
@@ -21,7 +22,8 @@ export async function findUnrecordedNotifications(
   })
 
   return await storageMutexHub.acquire(storage, async () => {
-    const file = new DigestsFile(`data/storages/${storage}/notification-digests`, {
+    const filename = getNotificationDigestsPath(storage)
+    const file = new DigestsFile(filename, {
       shrinkTarget: 500
     , shrinkThreshold: 1000
     })

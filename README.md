@@ -56,7 +56,7 @@ deno task update <script-relative-filename>
 deno task update-all
 
 # 清空存储
-deno clean <storage>
+deno clean <...storages>
 
 # 清空所有存储
 deno clean-all

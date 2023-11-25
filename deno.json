@@ -10,8 +10,8 @@
   , "build": "deno compile --output hallu --allow-net --allow-read --allow-write=data main.ts"
   , "start": "./hallu"
   , "test": "deno run --allow-net --allow-read=scripts --watch tasks/test.ts"
-  , "update": "deno run --allow-net --allow-read=scripts --allow-write=scripts tasks/update.ts"
-  , "update-all": "deno run --allow-net --allow-read=scripts --allow-write=scripts tasks/update-all.ts"
+  , "update": "deno run --allow-net --allow-read --allow-write=scripts tasks/update.ts"
+  , "update-all": "deno run --allow-net --allow-env=TEMP --allow-read --allow-write=scripts tasks/update-all.ts"
   , "clean": "deno run --allow-read --allow-write=data tasks/clean.ts"
   , "clean-all": "deno run --allow-read --allow-write=data tasks/clean-all.ts"
   }

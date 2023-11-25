@@ -14,8 +14,16 @@ export function getAppRoot(): string {
   }
 }
 
+export function getScriptsRoot(): string {
+  return path.join(getAppRoot(), 'scripts')
+}
+
+export function getDataRoot(): string {
+  return path.join(getAppRoot(), 'data')
+}
+
 export function getStoragesRoot(): string {
-  return path.join(getAppRoot(), `data/storages`)
+  return path.join(getDataRoot(), 'storages')
 }
 
 export function getStoragePath(storage: string): string {

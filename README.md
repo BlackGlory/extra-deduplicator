@@ -47,16 +47,16 @@ deno task build
 deno task start
 
 # 试运行用户脚本
-deno task test <script-relative-filename>
+deno task test <SCRIPT_FILENAME>
 
 # 更新用户脚本(基于用户脚本的元数据`@update-url`)
-deno task update <script-relative-filename>
+deno task update <SCRIPT_FILENAME>...
 
 # 更新所有用户脚本(基于用户脚本的元数据`@update-url`)
 deno task update-all
 
 # 清空存储
-deno clean <...storages>
+deno clean <STORAGE>...
 
 # 清空所有存储
 deno clean-all

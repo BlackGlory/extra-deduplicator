@@ -15,5 +15,5 @@ const filenames = await pipe(
 await each(filenames, updateScript)
 
 function isScriptFile(filename: string): boolean {
-  return /.m?[j|t]sx?/.test(path.extname(filename))
+  return /^.m?[j|t]sx?$/.test(path.extname(filename))
 }

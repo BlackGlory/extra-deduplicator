@@ -8,6 +8,7 @@ export interface INotification {
   imageUrl?: string
   iconUrl?: string
   url?: string
+  expires?: number
 }
 
 export interface IOptions {

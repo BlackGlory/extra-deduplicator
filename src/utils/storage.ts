@@ -3,7 +3,7 @@ import { sha1 } from 'npm:extra-compatible@^0.2.2'
 import { remove, removeSync } from 'npm:extra-filesystem@^0.5.1'
 import { Mutex } from 'npm:extra-promise@^6.0.8'
 import { getStoragesRoot } from '@utils/paths.ts'
-import { DigestsFile } from '@utils/digests-file.ts'
+import { NotificationDigestDatabase } from '@utils/notification-digest-database.ts'
 
 const pathnameToStorage = new Map<string, Storage>()
 
@@ -34,9 +34,9 @@ export class Storage {
     return await this.mutex.acquire(fn)
   }
 
-  getDigestsFile(): DigestsFile {
+  getNotificationDigestDatabase(): NotificationDigestDatabase {
     const filename = path.join(this.pathname, 'notification-digests')
-    return new DigestsFile(filename, {
+    return new NotificationDigestDatabase(filename, {
       shrinkTarget: 500
     , shrinkThreshold: 1000
     })

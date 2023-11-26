@@ -1,7 +1,6 @@
 import ms from 'npm:ms@^2.1.3'
 import { toArray, zip, difference, uniq } from 'npm:iterable-operator@^4.0.6'
 import { Awaitable, isAsyncIterable, isIterable, isArray, isEmptyArray, isntEmptyArray } from 'npm:@blackglory/prelude@^0.3.4'
-import { last } from 'npm:extra-utils@^5.5.2'
 import { isObservable } from 'npm:rxjs@^7.8.1'
 import { map, delay } from 'npm:extra-promise@^6.0.8'
 import { retryUntil, anyOf, notRetryOnCommonFatalErrors, exponentialBackoff, tap } from 'npm:extra-retry@^0.4.3'
@@ -53,7 +52,7 @@ export async function start<Options extends IOptions>(
 ): Promise<void> {
   const storage: Storage = await createStorage()
 
-  let isInitialCommit = isEmptyArray(await storage.getDigestsFile().read())
+  let isInitialCommit = isEmptyArray(await storage.getNotificationDigestDatabase().all())
   let isStartupCommit = true
   while (true) {
     // 用户脚本因为网络问题而抛出错误的情况非常普遍, 有必要捕获错误和重试.
@@ -109,12 +108,12 @@ export async function start<Options extends IOptions>(
           const digests = await map(notifications, hashNotification)
 
           await storage.lock(async () => {
-            const digestsFile = storage.getDigestsFile()
-            const oldDigests = await digestsFile.read()
+            const digestDatabase = storage.getNotificationDigestDatabase()
+            const oldDigests = await digestDatabase.all()
             const newDigests = toArray(difference(uniq(digests), oldDigests))
 
             if (isntEmptyArray(newDigests)) {
-              await digestsFile.append(newDigests)
+              await digestDatabase.append(newDigests)
             }
           })
 
@@ -133,12 +132,12 @@ export async function start<Options extends IOptions>(
           const digests = await map(notifications, hashNotification)
 
           const newNotifications = await storage.lock(async () => {
-            const digestsFile = storage.getDigestsFile()
-            const oldDigests = await digestsFile.read()
+            const digestDatabase = storage.getNotificationDigestDatabase()
+            const oldDigests = await digestDatabase.all()
             const newDigests = toArray(difference(uniq(digests), oldDigests))
 
             if (isntEmptyArray(newDigests)) {
-              await digestsFile.append(newDigests)
+              await digestDatabase.append(newDigests)
 
               const digestToNotification = Object.fromEntries(zip(digests, notifications))
               return newDigests.map(digest => digestToNotification[digest])
@@ -162,13 +161,11 @@ export async function start<Options extends IOptions>(
         const digest = await hashNotification(notification)
 
         await storage.lock(async () => {
-          const digestsFile = storage.getDigestsFile()
-
-          const oldDigests = await digestsFile.read()
-          const lastestDigest = last(oldDigests)
+          const digestDatabase = storage.getNotificationDigestDatabase()
+          const lastestDigest = await digestDatabase.last()
 
           if (digest !== lastestDigest) {
-            digestsFile.append([digest])
+            digestDatabase.append([digest])
 
             if (ignoreInitialCommit && isInitialCommit) return
             if (ignoreStartupCommit && isStartupCommit) return

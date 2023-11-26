@@ -1,5 +1,4 @@
 import * as path from 'https://deno.land/std@0.208.0/path/mod.ts'
-import { sha1 } from 'npm:extra-compatible@^0.2.2'
 import { isCompiled } from '@utils/is-compiled.ts'
 
 export function getAppRoot(): string {
@@ -25,12 +24,4 @@ export function getDataRoot(): string {
 
 export function getStoragesRoot(): string {
   return path.join(getDataRoot(), 'storages')
-}
-
-export async function getStoragePath(storage: string): Promise<string> {
-  return path.join(getStoragesRoot(), await sha1(storage))
-}
-
-export async function getNotificationDigestsPath(storage: string): Promise<string> {
-  return path.join(await getStoragePath(storage), 'notification-digests')
 }

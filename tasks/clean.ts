@@ -1,10 +1,9 @@
-import { remove } from '@utils/fs.ts'
-import { getStoragePath } from '@utils/paths.ts'
 import { each } from 'npm:extra-promise@^6.0.8'
+import { uniq } from 'npm:iterable-operator@^4.0.6'
+import { Storage } from '@utils/storage.ts'
 
-const storages = Deno.args
-await each(storages, clean)
-
-async function clean(storage: string): Promise<void> {
-  await remove(getStoragePath(storage))
-}
+const storageNames = Deno.args
+await each(uniq(storageNames), async storageName => {
+  const storage = await Storage.create(storageName)
+  await storage.remove()
+})

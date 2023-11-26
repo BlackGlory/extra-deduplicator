@@ -9,6 +9,10 @@ export interface INotification {
   imageUrl?: string
   iconUrl?: string
   url?: string
+
+  /**
+   * 以毫秒为单位的Unix时间戳.
+   */
   expires?: number
 }
 

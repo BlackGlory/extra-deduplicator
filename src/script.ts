@@ -5,6 +5,7 @@ export interface INotification {
   id?: string | number
   title?: string
   message?: string
+
   imageUrl?: string
   iconUrl?: string
   url?: string

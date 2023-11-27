@@ -4,7 +4,7 @@ import { Awaitable, isAsyncIterable, isIterable, isArray, isEmptyArray, isntEmpt
 import { isObservable } from 'npm:rxjs@^7.8.1'
 import { map, delay } from 'npm:extra-promise@^6.0.8'
 import { retryUntil, anyOf, notRetryOnCommonFatalErrors, exponentialBackoff, tap } from 'npm:extra-retry@^0.4.3'
-import { INotification, IScript, IOptions, NotificationFilter, ScriptResult, ScriptValue } from '@src/script.ts'
+import { INotification, IScript, IOptions, Mode, ScriptResult, ScriptValue } from '@src/script.ts'
 import { Storage } from '@utils/storage.ts'
 import { appDestructor } from '@utils/graceful-exit.ts'
 import { hashNotification } from '@utils/hash-notification.ts'
@@ -89,8 +89,8 @@ export async function start<Options extends IOptions>(
   }
 
   async function handleValue(value: ScriptValue<Options>): Promise<void> {
-    switch (script.options.filter) {
-      case NotificationFilter.Passthrough: {
+    switch (script.options.mode) {
+      case Mode.Passthrough: {
         const notifications = normalizeValue(value)
 
         if (isntEmptyArray(notifications)) {
@@ -102,7 +102,7 @@ export async function start<Options extends IOptions>(
 
         break
       }
-      case NotificationFilter.KeepAll: {
+      case Mode.KeepAll: {
         const notifications = normalizeValue(value)
 
         if (isntEmptyArray(notifications)) {
@@ -126,7 +126,7 @@ export async function start<Options extends IOptions>(
 
         break
       }
-      case NotificationFilter.KeepDiff: {
+      case Mode.KeepDiff: {
         const notifications = value as INotification[]
 
         if (isntEmptyArray(notifications)) {
@@ -157,7 +157,7 @@ export async function start<Options extends IOptions>(
 
         break
       }
-      case NotificationFilter.KeepLatestDiff: {
+      case Mode.KeepLatestDiff: {
         const notification = value as INotification
         const digest = await hashNotification(notification)
 

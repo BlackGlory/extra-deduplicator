@@ -2,7 +2,7 @@
 import { parseFeed } from 'https://deno.land/x/rss@1.0.0/mod.ts'
 import { unescape } from 'https://deno.land/std@0.208.0/html/mod.ts'
 import { firstNotNullishOf } from 'https://deno.land/std@0.208.0/collections/mod.ts'
-import { script, NotificationFilter } from '@src/script.ts'
+import { script, Mode } from '@src/script.ts'
 
 export default script(
   async (_, url: string) => {
@@ -21,5 +21,5 @@ export default script(
     , url: firstNotNullishOf(entry.links, link => link.href)
     }))
   }
-, { filter: NotificationFilter.KeepDiff }
+, { mode: Mode.KeepDiff }
 )

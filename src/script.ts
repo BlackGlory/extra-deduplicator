@@ -17,14 +17,14 @@ export interface INotification {
 }
 
 export interface IOptions {
-  filter: NotificationFilter
+  mode: Mode
 }
 
 export interface IContext {
   fetch: typeof globalThis.fetch
 }
 
-export enum NotificationFilter {
+export enum Mode {
   /**
    * 保留返回的所有通知, 保留的通知不会被记录.
    */
@@ -58,11 +58,11 @@ export type ScriptResult<Options extends IOptions> =
 | AsyncIterable<ScriptValue<Options>>
 
 export type ScriptValue<Options extends IOptions> = {
-  [NotificationFilter.Passthrough]: INotification | INotification[]
-  [NotificationFilter.KeepAll]: INotification | INotification[]
-  [NotificationFilter.KeepDiff]: INotification[]
-  [NotificationFilter.KeepLatestDiff]: INotification
-}[Options['filter']]
+  [Mode.Passthrough]: INotification | INotification[]
+  [Mode.KeepAll]: INotification | INotification[]
+  [Mode.KeepDiff]: INotification[]
+  [Mode.KeepLatestDiff]: INotification
+}[Options['mode']]
 
 export function script<Args extends unknown[], Options extends IOptions>(
   fn: (context: IContext, ...args: Args) => ScriptResult<Options>

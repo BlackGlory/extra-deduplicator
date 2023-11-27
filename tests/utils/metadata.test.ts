@@ -1,7 +1,7 @@
 import { it } from 'https://deno.land/std@0.208.0/testing/bdd.ts'
 import { expect } from 'https://deno.land/std@0.208.0/expect/mod.ts'
-import { dedent } from 'npm:extra-tags@^0.4.2'
-import { toArray } from 'npm:@blackglory/prelude@^0.3.4'
+import { dedent } from 'https://esm.sh/extra-tags@0.4.2'
+import { toArray } from 'https://esm.sh/@blackglory/prelude@0.3.4'
 import { parseMetadata, parseMetadataLines } from '@utils/metadata.ts'
 
 it('parseMetadata', () => {

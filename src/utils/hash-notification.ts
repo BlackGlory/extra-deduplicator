@@ -1,4 +1,4 @@
-import { sha256 } from 'npm:extra-compatible@^0.2.2'
+import { sha256 } from 'https://esm.sh/extra-compatible@0.2.2'
 import { INotification } from '@src/script.ts'
 
 export async function hashNotification(notification: INotification): Promise<string> {

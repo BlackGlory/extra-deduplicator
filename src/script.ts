@@ -1,5 +1,5 @@
-import { Observable } from 'npm:rxjs@^7.8.1'
-import { Awaitable } from 'npm:@blackglory/prelude@^0.3.4'
+import { Observable } from 'https://esm.sh/rxjs@7.8.1'
+import { Awaitable } from 'https://esm.sh/@blackglory/prelude@0.3.4'
 
 export interface INotification {
   id?: string | number

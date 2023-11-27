@@ -1,7 +1,7 @@
 import * as path from 'https://deno.land/std@0.208.0/path/mod.ts'
-import { sha1 } from 'npm:extra-compatible@^0.2.2'
+import { sha1 } from 'https://esm.sh/extra-compatible@0.2.2'
 import { remove, removeSync } from 'npm:extra-filesystem@^0.5.1'
-import { Mutex } from 'npm:extra-promise@^6.0.8'
+import { Mutex } from 'https://esm.sh/extra-promise@6.0.8'
 import { getStoragesRoot } from '@utils/paths.ts'
 import { NotificationDigestDatabase } from '@utils/notification-digest-database.ts'
 

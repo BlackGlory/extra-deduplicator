@@ -12,6 +12,12 @@ import config from '@root/config.ts'
 
 interface IStartOptions {
   /**
+   * 该用户脚本实例的标识名, 在省略此项的情况下, 将随机生成一个标识名.
+   * 这被用于创建存储, 在省略此项的情况下, 相关存储会在程序退出时删除.
+   */
+  id?: string
+
+  /**
    * 用户脚本执行的间隔时间, 这通常只对返回值为Awaitable的用户脚本有意义.
    */
   interval?: number
@@ -32,12 +38,6 @@ interface IStartOptions {
    * 即无论提交过滤结果如何, 都不将其发送给notify函数.
    */
   ignoreStartupCommit?: boolean
-
-  /**
-   * 该用户脚本使用的存储.
-   * 在省略此项的情况下, 将创建随机名称的临时存储, 存储会在程序退出时删除.
-   */
-  storage?: string
 }
 
 export async function start<Options extends IOptions>(
@@ -47,7 +47,7 @@ export async function start<Options extends IOptions>(
   , once = false
   , ignoreInitialCommit = true
   , ignoreStartupCommit = false
-  , storage: storageName
+  , id
   }: IStartOptions = {}
 ): Promise<void> {
   const storage: Storage = await createStorage()
@@ -78,10 +78,11 @@ export async function start<Options extends IOptions>(
   }
 
   async function createStorage(): Promise<Storage> {
-    if (storageName) {
-      return await Storage.create(storageName)
+    if (id) {
+      return await Storage.create(id)
     } else {
-      const storage = await Storage.create(crypto.randomUUID())
+      const id = crypto.randomUUID()
+      const storage = await Storage.create(id)
       appDestructor.defer(() => storage.removeSync())
       return storage
     }

@@ -12,8 +12,8 @@ export class Storage {
 
   private constructor(private pathname: string) {}
 
-  static async create(name: string): Promise<Storage> {
-    const pathname = path.join(getStoragesRoot(), await sha1(name))
+  static async create(id: string): Promise<Storage> {
+    const pathname = path.join(getStoragesRoot(), await sha1(id))
 
     if (!pathnameToStorage.has(pathname)) {
       pathnameToStorage.set(pathname, new Storage(pathname))

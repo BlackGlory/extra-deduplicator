@@ -13,11 +13,19 @@ git clone git@github.com:BlackGlory/hallu.git
 
 #### getCookies
 ```ts
-function getCookies(domain: string): Awaitable<string | null>
+function getCookies(url: string): Awaitable<string | null>
 ```
 
-该函数为用户脚本发出的HTTP请求填充Cookies标头.
-只有在你的用户脚本需要注入Cookies标头的情况下, 才需要实现它.
+该函数用于为用户脚本发出的HTTP请求填充`Cookie`标头.
+只有在你的用户脚本需要注入`Cookie`标头的情况下, 才需要实现它.
+
+#### setCookie
+```ts
+function setCookie(cookie: string): Awaitable<void>
+```
+
+该函数用于应用用户脚本从HTTP响应中收到的`Set-Cookie`标头.
+只有在你的用户脚本需要根据`Set-Cookie`标头更新Cookie的情况下, 才需要实现它.
 
 #### notify
 ```ts

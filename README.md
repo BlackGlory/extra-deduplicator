@@ -82,10 +82,10 @@ deno task build
 deno task start
 
 # 更新用户脚本(基于用户脚本的元数据`@update-url`)
-deno task update <SCRIPT_FILENAME>...
+deno task upgrade <SCRIPT_FILENAME>...
 
 # 更新所有用户脚本(基于用户脚本的元数据`@update-url`)
-deno task update-all
+deno task upgrade-all
 
 # 清空存储
 deno clean <ID>...

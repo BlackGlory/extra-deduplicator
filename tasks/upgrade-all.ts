@@ -4,7 +4,7 @@ import { pipe } from 'https://esm.sh/extra-utils@5.5.2'
 import { filterAsync, toArrayAsync } from 'https://esm.sh/iterable-operator@4.0.6'
 import { findAllFilenames } from 'npm:extra-filesystem@^0.5.1'
 import { getScriptsRoot } from '@utils/paths.ts'
-import { updateScript } from '@utils/update-script.ts'
+import { upgradeScript } from '@utils/upgrade-script.ts'
 
 const filenames = await pipe(
   getScriptsRoot()
@@ -12,7 +12,7 @@ const filenames = await pipe(
 , iter => filterAsync(iter, isScriptFile)
 , toArrayAsync
 )
-await each(filenames, updateScript)
+await each(filenames, upgradeScript)
 
 function isScriptFile(filename: string): boolean {
   return /^.m?[j|t]sx?$/.test(path.extname(filename))

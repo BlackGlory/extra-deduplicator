@@ -56,7 +56,7 @@ export async function start<Options extends IOptions>(
   let isStartupCommit = true
   while (true) {
     // 用户脚本因为网络问题而抛出错误的情况非常普遍, 有必要捕获错误和重试.
-    await retryUntil(
+    const result = await retryUntil(
       anyOf(
         notRetryOnCommonFatalErrors
       , tap(({ error }) => console.error(error))
@@ -66,11 +66,10 @@ export async function start<Options extends IOptions>(
         , jitter: false
         })
       )
-    , (async () => {
-        const result = script.fn({ fetch })
-        await handleResult(result, handleValue)
-      })
+    , () => script.fn({ fetch })
     )
+
+    await handleResult(result, handleValue)
 
     if (once) break
 

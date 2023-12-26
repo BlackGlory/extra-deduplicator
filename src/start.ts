@@ -10,6 +10,8 @@ import { appDestructor } from '@utils/graceful-exit.ts'
 import { hashNotification } from '@utils/hash-notification.ts'
 import config from '@root/config.ts'
 
+globalThis.name = 'Hallu'
+
 interface IStartOptions {
   /**
    * 该用户脚本实例的标识名, 在省略此项的情况下, 将随机生成一个标识名.
@@ -201,7 +203,9 @@ async function handleResult<Options extends IOptions>(
   result: ScriptResult<Options>
 , handleValue: (value: ScriptValue<Options>) => Awaitable<void>
 ): Promise<void> {
-  if (isIterable(result) || isAsyncIterable(result)) {
+  if (isArray<INotification>(result)) {
+    await handleValue(result)
+  } else if (isIterable(result) || isAsyncIterable(result)) {
     for await (const value of result) {
       await handleValue(value)
     }

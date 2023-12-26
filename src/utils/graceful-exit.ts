@@ -3,7 +3,10 @@ import { platform } from 'node:os'
 
 export const appDestructor = new SyncDestructor()
 
-globalThis.addEventListener('unhandledrejection', gracefulExit)
+globalThis.addEventListener('unhandledrejection', e => {
+  console.error(e.reason)
+  gracefulExit()
+})
 globalThis.addEventListener('unload', gracefulExit)
 
 Deno.addSignalListener('SIGINT', gracefulExit)

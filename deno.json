@@ -6,13 +6,13 @@
   , "@scripts/": "./scripts/"
   }
 , "tasks": {
-    "dev": "deno run --allow-net --allow-env=TEMP --allow-read --allow-write=data main.ts"
-  , "build": "deno compile --output hallu --allow-net --allow-env=TEMP --allow-read --allow-write=data main.ts"
+    "dev": "deno run --allow-net --allow-env --allow-read --allow-write main.ts"
+  , "build": "deno compile --output hallu --allow-net --allow-env --allow-read --allow-write main.ts"
   , "start": "./hallu"
-  , "test": "deno run --allow-net --allow-env=TEMP --allow-read=scripts --watch tasks/test.ts"
-  , "update": "deno run --allow-net --allow-env=TEMP --allow-read --allow-write=scripts tasks/update.ts"
-  , "update-all": "deno run --allow-net --allow-env=TEMP --allow-read --allow-write=scripts tasks/update-all.ts"
-  , "clean": "deno run --allow-env=TEMP --allow-read --allow-write=data tasks/clean.ts"
-  , "clean-all": "deno run --allow-env=TEMP --allow-read --allow-write=data tasks/clean-all.ts"
+  , "test": "deno run --allow-net --allow-env --allow-read --watch tasks/test.ts"
+  , "update": "deno run --allow-net --allow-env --allow-read --allow-write tasks/update.ts"
+  , "update-all": "deno run --allow-net --allow-env --allow-read --allow-write tasks/update-all.ts"
+  , "clean": "deno run --allow-env --allow-read --allow-write tasks/clean.ts"
+  , "clean-all": "deno run --allow-env --allow-read --allow-write tasks/clean-all.ts"
   }
 }

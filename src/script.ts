@@ -2,18 +2,18 @@ import { Observable } from 'https://esm.sh/rxjs@7.8.1'
 import { Awaitable } from 'https://esm.sh/@blackglory/prelude@0.3.4'
 
 export interface INotification {
-  id?: string | number
-  title?: string
-  message?: string
+  id?: string | number | null
+  title?: string | null
+  message?: string | null
 
-  imageUrl?: string
-  iconUrl?: string
-  url?: string
+  imageUrl?: string | null
+  iconUrl?: string | null
+  url?: string | null
 
   /**
    * 以毫秒为单位的Unix时间戳.
    */
-  expires?: number
+  expires?: number | null
 }
 
 export interface IOptions {

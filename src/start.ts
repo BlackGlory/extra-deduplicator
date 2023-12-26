@@ -8,6 +8,7 @@ import { INotification, IScript, IOptions, Mode, ScriptResult, ScriptValue } fro
 import { Storage } from '@utils/storage.ts'
 import { appDestructor } from '@utils/graceful-exit.ts'
 import { hashNotification } from '@utils/hash-notification.ts'
+import { validateNotification } from '@utils/validate-notification.ts'
 import config from '@root/config.ts'
 
 globalThis.name = 'Hallu'
@@ -90,6 +91,8 @@ export async function start<Options extends IOptions>(
   }
 
   async function handleValue(value: ScriptValue<Options>): Promise<void> {
+    validateNotification(value)
+
     switch (script.options.mode) {
       case Mode.Passthrough: {
         const notifications = normalizeValue(value)
@@ -172,7 +175,7 @@ export async function start<Options extends IOptions>(
             if (ignoreInitialCommit && isInitialCommit) return
             if (ignoreStartupCommit && isStartupCommit) return
 
-            return config.notify([notification])
+            await config.notify([notification])
           }
         })
 

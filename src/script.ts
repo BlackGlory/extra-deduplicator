@@ -20,10 +20,6 @@ export interface IOptions {
   mode: Mode
 }
 
-export interface IContext {
-  fetch: typeof globalThis.fetch
-}
-
 export enum Mode {
   /**
    * 保留返回的所有通知, 保留的通知不会被记录.
@@ -32,6 +28,7 @@ export enum Mode {
 
   /**
    * 保留返回的所有通知, 保留的通知会被记录.
+   * 该模式的唯一作用是便于以后切换到KeepDiff或KeepLatestDiff.
    */
 , KeepAll
 
@@ -47,7 +44,7 @@ export enum Mode {
 }
 
 export interface IScript<Options extends IOptions> {
-  fn: (context: IContext) => ScriptResult<Options>
+  fn: () => ScriptResult<Options>
   options: Options
 }
 
@@ -65,11 +62,11 @@ export type ScriptValue<Options extends IOptions> = {
 }[Options['mode']]
 
 export function script<Args extends unknown[], Options extends IOptions>(
-  fn: (context: IContext, ...args: Args) => ScriptResult<Options>
+  fn: (...args: Args) => ScriptResult<Options>
 , options: Options
 ): (...args: Args) => IScript<Options> {
   return (...args) => ({
-    fn: context => fn(context, ...args)
+    fn: () => fn(...args)
   , options
   })
 }

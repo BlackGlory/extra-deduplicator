@@ -5,7 +5,7 @@ import { firstNotNullishOf } from 'https://deno.land/std@0.208.0/collections/mod
 import { script, Mode } from '@src/script.ts'
 
 export default script(
-  async (_, url: string) => {
+  async (url: string) => {
     const xml = await fetch(url).then(res => res.text())
 
     const feed = await parseFeed(xml)

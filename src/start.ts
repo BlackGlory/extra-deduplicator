@@ -1,6 +1,6 @@
 import ms from 'https://esm.sh/ms@2.1.3'
 import { toArray, zip, difference, uniq } from 'https://esm.sh/iterable-operator@4.0.6'
-import { Awaitable, isAsyncIterable, isIterable, isArray, isEmptyArray, isntEmptyArray } from 'https://esm.sh/@blackglory/prelude@0.3.4'
+import { Awaitable, isAsyncIterable, isIterable, isArray, isEmptyArray, isntEmptyArray, NonEmptyArray } from 'https://esm.sh/@blackglory/prelude@0.3.4'
 import { isObservable } from 'https://esm.sh/rxjs@7.8.1'
 import { map, delay } from 'https://esm.sh/extra-promise@6.0.8'
 import { retryUntil, anyOf, notRetryOnCommonFatalErrors, exponentialBackoff, tap } from 'https://esm.sh/extra-retry@0.4.3'
@@ -9,9 +9,10 @@ import { Storage } from '@utils/storage.ts'
 import { appDestructor } from '@utils/graceful-exit.ts'
 import { hashNotification } from '@utils/hash-notification.ts'
 import { validateNotification } from '@utils/validate-notification.ts'
-import config from '@root/config.ts'
 
 globalThis.name = 'Hallu'
+
+export type INotify = (notifications: NonEmptyArray<INotification>) => Awaitable<void>
 
 interface IStartOptions {
   /**
@@ -41,6 +42,8 @@ interface IStartOptions {
    * 即无论提交过滤结果如何, 都不将其发送给notify函数.
    */
   ignoreStartupCommit?: boolean
+
+  notify?: INotify
 }
 
 export async function start<Options extends IOptions>(
@@ -51,6 +54,9 @@ export async function start<Options extends IOptions>(
   , ignoreInitialCommit = true
   , ignoreStartupCommit = false
   , id
+  , notify = notifications => {
+      notifications.forEach(notification => console.info(notification))
+    }
   }: IStartOptions = {}
 ): Promise<void> {
   const storage: Storage = await createStorage()
@@ -69,7 +75,7 @@ export async function start<Options extends IOptions>(
         , jitter: false
         })
       )
-    , () => script.fn({ fetch })
+    , script.fn
     )
 
     await handleResult(result, handleValue)
@@ -101,7 +107,7 @@ export async function start<Options extends IOptions>(
           if (ignoreInitialCommit && isInitialCommit) break
           if (ignoreStartupCommit && isStartupCommit) break
 
-          await config.notify(notifications)
+          await notify(notifications)
         }
 
         break
@@ -125,7 +131,7 @@ export async function start<Options extends IOptions>(
           if (ignoreInitialCommit && isInitialCommit) break
           if (ignoreStartupCommit && isStartupCommit) break
 
-          await config.notify(notifications)
+          await notify(notifications)
         }
 
         break
@@ -155,7 +161,7 @@ export async function start<Options extends IOptions>(
             if (ignoreInitialCommit && isInitialCommit) break
             if (ignoreStartupCommit && isStartupCommit) break
 
-            await config.notify(newNotifications)
+            await notify(newNotifications)
           }
         }
 
@@ -175,7 +181,7 @@ export async function start<Options extends IOptions>(
             if (ignoreInitialCommit && isInitialCommit) return
             if (ignoreStartupCommit && isStartupCommit) return
 
-            await config.notify([notification])
+            await notify([notification])
           }
         })
 
@@ -192,7 +198,7 @@ export async function test<Options extends IOptions>(
   script: IScript<Options>
 , _: IStartOptions
 ): Promise<void> {
-  const result = script.fn({ fetch })
+  const result = script.fn()
   await handleResult(result, handleValue)
 
   function handleValue(value: ScriptValue<Options>): void {

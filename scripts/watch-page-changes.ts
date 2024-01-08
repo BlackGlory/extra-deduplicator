@@ -7,7 +7,7 @@ import { script, Mode } from '@src/script.ts'
 const parser = new DOMParser()
 
 export default script(
-  async (_, { name, url, selector }: {
+  async ({ name, url, selector }: {
     name: string
     url: string
     selector?: string

@@ -8,42 +8,6 @@ git clone git@github.com:BlackGlory/hallu.git
 ```
 
 ## 配置
-### `config.ts`
-根目录下的`config.ts`文件用于项目的全局配置, 你需要修改文件中的`getCookies`和`notify`函数.
-
-#### getCookies
-```ts
-function getCookies(url: string): Awaitable<string | null>
-```
-
-该函数用于为用户脚本发出的HTTP请求填充`Cookie`标头.
-只有在你的用户脚本需要注入`Cookie`标头的情况下, 才需要实现它.
-
-#### setCookie
-```ts
-function setCookie(cookie: string): Awaitable<void>
-```
-
-该函数用于应用用户脚本从HTTP响应中收到的`Set-Cookie`标头.
-只有在你的用户脚本需要根据`Set-Cookie`标头更新Cookie的情况下, 才需要实现它.
-
-#### notify
-```ts
-function notify(notifications: INotification[]): Awaitable<void>
-```
-
-该函数发出/转发用户脚本提交的通知.
-将通知发送到IM或电子邮箱是常见的选择, 利用类似[Apprise]的服务可以减轻实现此类通知的难度.
-如果你只需要在单机上生成和接收通知, 那么也可以选择借助[deno_notify]等本机模块弹出本机通知.
-
-[Apprise]: https://github.com/caronc/apprise-api
-[deno_notify]: https://github.com/Pandawan/deno_notify
-
-作为后备选项, 我们还提供一个名为Inbox的自托管解决方案, 在你不想走简单路径的情况下, 可以尝试一下它.
-作为自托管解决方案, Inbox需要你有一台可以在公网访问的服务器.
-为防止中间人攻击, 你最好有一个域名, 以便开启SSL.
-如果你有一台长时间运行的家庭设备, 可以尝试通过ngrok和ZeroTier这样的内网穿透方案来替代.
-
 ### `main.ts`
 根目录下的`main.ts`文件用于项目启动, 编辑该文件以决定需要启用哪些用户脚本.
 
@@ -69,6 +33,23 @@ start(watchPageChanges({
 , url: 'https://icanhazip.com/'
 }))
 ```
+
+#### notify函数
+```ts
+function notify(notifications: INotification[]): Awaitable<void>
+```
+
+该函数发出/转发用户脚本提交的通知.
+将通知发送到IM或电子邮箱是常见的选择, 利用类似[Apprise]的服务可以减轻实现此类通知的难度.
+如果你只需要在单机上生成和接收通知, 那么也可以选择借助[deno_notify]等本机模块弹出本机通知.
+
+[Apprise]: https://github.com/caronc/apprise-api
+[deno_notify]: https://github.com/Pandawan/deno_notify
+
+作为后备选项, 我们还提供一个名为Inbox的自托管解决方案, 在你不想走简单路径的情况下, 可以尝试一下它.
+作为自托管解决方案, Inbox需要你有一台可以在公网访问的服务器.
+为防止中间人攻击, 你最好有一个域名, 以便开启SSL.
+如果你有一台长时间运行的家庭设备, 可以尝试通过ngrok和ZeroTier这样的内网穿透方案来替代.
 
 ## 使用
 ```sh

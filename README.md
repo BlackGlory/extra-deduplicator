@@ -7,8 +7,7 @@ Hallu是一个建立在Deno运行时上的基于用户脚本的hackable/moddable
 git clone git@github.com:BlackGlory/hallu.git
 ```
 
-## 配置
-### `main.ts`
+## 配置: `main.ts`
 根目录下的`main.ts`文件用于项目启动, 编辑该文件以决定需要启用哪些用户脚本.
 
 例子:
@@ -34,7 +33,7 @@ start(watchPageChanges({
 }))
 ```
 
-#### notify函数
+### notify函数
 ```ts
 function notify(notifications: INotification[]): Awaitable<void>
 ```
@@ -51,7 +50,7 @@ function notify(notifications: INotification[]): Awaitable<void>
 为防止中间人攻击, 你最好有一个域名, 以便开启SSL.
 如果你有一台长时间运行的家庭设备, 可以尝试通过ngrok和ZeroTier这样的内网穿透方案来替代.
 
-## 使用
+## 命令
 ```sh
 # 以开发模式启动Hallu
 deno task dev
@@ -68,27 +67,18 @@ deno task upgrade <SCRIPT_FILENAME>...
 # 更新所有用户脚本(基于用户脚本的元数据`@update-url`)
 deno task upgrade-all
 
-# 清空存储
-deno clean <ID>...
+# 删除指定容器
+deno task remove <CONTAINER>...
 
-# 清空所有存储
-deno clean-all
+# 删除所有容器
+deno task clean
+
+# 将源容器合并进目标容器里, 当目标容器不存在时, 该操作相当于重命名
+deno task merge <CONTAINER_SOURCE> <CONTAINER_DEST>
 ```
 
-## 概念
-### 用户脚本 Script
+## 用户脚本 Script
 用户脚本是一个ESM模块, 模块的默认导出是一个被`script`函数包装过的函数.
 你可以通过函数参数为用户脚本添加配置项, 以重用用户脚本.
 
-学习编写用户脚本最好的方式是阅读已有的例子, 你可以在存储库的scripts目录中找到官方提供的脚本.
-
-### 存储 Storage
-存储是Hallu内部对持久化状态的抽象.
-这些持久化状态包括用户脚本提交的通知的哈希值(供过滤器使用).
-
-Hallu当前的存储是用平面文件实现的临时数据库方案, 因为Deno生态环境中尚未有一个合适的SQLite实现.
-你可以在项目的`data/storages/<storage>`里找到这些平面文件.
-
-当前, 存储的并发控制只是在软件层面实现的粗粒度互斥锁, 这种锁定不支持多线程和多进程.
-在Hallu运行时删除/编辑存储的平面文件被视作未定义行为, 应尽量避免这么做.
-当存储出现故障时, 删除对应的平面文件一般可以解决问题.
+学习编写用户脚本最好的方式是查看相应的接口和阅读已有的例子.

@@ -14,7 +14,7 @@ export default script(
   }) => {
     const html = await fetch(url).then(res => res.text())
 
-    const id = go(() => {
+    const salt = go(() => {
       if (selector) {
         const document = parser.parseFromString(html, 'text/html')
         assert(document)
@@ -29,7 +29,7 @@ export default script(
     })
 
     return {
-      id
+      salt
     , title: `${name} changed`
     , url
     }

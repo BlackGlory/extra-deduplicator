@@ -3,7 +3,7 @@ import { script, Mode } from '@src/script.ts'
 
 export default script(
   () => ({
-    id: Date.now()
+    salt: Date.now().toString()
   , title: 'Hallu started'
   })
 , { mode: Mode.Passthrough }

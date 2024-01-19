@@ -13,15 +13,3 @@ export function getAppRoot(): string {
     return path.dirname(path.join(path.fromFileUrl(import.meta.url), '../..'))
   }
 }
-
-export function getScriptsRoot(): string {
-  return path.join(getAppRoot(), 'scripts')
-}
-
-export function getDataRoot(): string {
-  return path.join(getAppRoot(), 'data')
-}
-
-export function getStoragesRoot(): string {
-  return path.join(getDataRoot(), 'storages')
-}

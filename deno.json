@@ -1,18 +1,9 @@
 {
   "imports": {
-    "@root/": "./"
-  , "@src/": "./src/"
+    "@src/": "./src/"
   , "@utils/": "./src/utils/"
-  , "@scripts/": "./scripts/"
   }
 , "tasks": {
-    "dev": "deno run --allow-net --allow-env --allow-read --allow-write main.ts"
-  , "build": "deno compile --output hallu --allow-net --allow-env --allow-read --allow-write main.ts"
-  , "start": "./hallu"
-  , "test": "deno run --allow-net --allow-env --allow-read --watch tasks/test.ts"
-  , "update": "deno run --allow-net --allow-env --allow-read --allow-write tasks/update.ts"
-  , "update-all": "deno run --allow-net --allow-env --allow-read --allow-write tasks/update-all.ts"
-  , "clean": "deno run --allow-env --allow-read --allow-write tasks/clean.ts"
-  , "clean-all": "deno run --allow-env --allow-read --allow-write tasks/clean-all.ts"
+    "test": "deno test --allow-all --unstable"
   }
 }

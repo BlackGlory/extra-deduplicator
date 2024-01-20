@@ -19,7 +19,7 @@ const migrationFiles = await map(
   }
 )
 
-export async function openDatabase(filename: string = ':memory:'): Promise<Database> {
+export async function openDatabase(filename = ':memory:'): Promise<Database> {
   const migrations = await map(migrationFiles, async file => {
     const content = await Deno.readTextFile(file.path)
     return parseMigrationFile(file.url.href, content)

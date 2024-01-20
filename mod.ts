@@ -1,1 +1,1 @@
-export * from '@src/deduplicator.ts'
+export * from './src/deduplicator.ts'

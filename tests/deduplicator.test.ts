@@ -31,7 +31,16 @@ describe('Deduplicator', () => {
     })
 
     it('with shrink', async () => {
-      // TODO
+      const deduplicator = await Deduplicator.create<number>({
+        shrink: {
+          target: 1
+        , threshold: 2
+        }
+      })
+
+      await deduplicator.add([1, 2])
+
+      expect(await deduplicator.diff([1, 2])).toStrictEqual([1])
     })
   })
 
@@ -56,14 +65,25 @@ describe('Deduplicator', () => {
       })
 
       const result1 = await deduplicator.diff([123])
-      const result2 = await deduplicator.diff([456])
+      const result2 = await deduplicator.diff(['123', 456])
 
       expect(result1).toStrictEqual([123])
       expect(result2).toStrictEqual([456])
     })
 
     it('with shrink', async () => {
-      // TODO
+      const deduplicator = await Deduplicator.create<number>({
+        shrink: {
+          target: 1
+        , threshold: 2
+        }
+      })
+
+      const result1 = await deduplicator.diff([1, 2])
+      const result2 = await deduplicator.diff([1, 2])
+
+      expect(result1).toStrictEqual([1, 2])
+      expect(result2).toStrictEqual([1])
     })
   })
 
@@ -94,8 +114,19 @@ describe('Deduplicator', () => {
       expect(result3).toBe(true)
     })
 
-    it('with shrink', () => {
-      // TODO
+    it('with shrink', async () => {
+      const deduplicator = await Deduplicator.create<number>({
+        shrink: {
+          target: 1
+        , threshold: 2
+        }
+      })
+      await deduplicator.add([1])
+
+      const result = await deduplicator.lastDiff(2)
+
+      expect(result).toBe(true)
+      expect(await deduplicator.diff([1, 2])).toStrictEqual([1])
     })
   })
 })

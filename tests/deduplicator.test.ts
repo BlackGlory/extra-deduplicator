@@ -51,12 +51,18 @@ describe('Deduplicator', () => {
       const result1 = await deduplicator.diff([])
       const result2 = await deduplicator.diff(['foo'])
       const result3 = await deduplicator.diff(['foo', 'bar'])
-      const result4 = await deduplicator.diff([])
 
       expect(result1).toStrictEqual([])
       expect(result2).toStrictEqual(['foo'])
       expect(result3).toStrictEqual(['bar'])
-      expect(result4).toStrictEqual([])
+    })
+
+    it('edge: same elements', async () => {
+      const deduplicator = await Deduplicator.create<string>()
+
+      const result = await deduplicator.diff(['foo', 'bar', 'foo'])
+
+      expect(result).toStrictEqual(['foo', 'bar'])
     })
 
     it('with custom hash', async () => {

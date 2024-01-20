@@ -19,8 +19,8 @@ class Deduplicator<T> {
   static create(options?: IOptions): Promise<Deduplicator<T>>
 
   add(values: T[]): Promise<void>
-  diff(values: T[]): Promise<T[]>
-  lastDiff(value: T): Promise<boolean>
+  addAndDiff(values: T[]): Promise<T[]>
+  addAndDiffLast(value: T): Promise<boolean>
 
   close(): void
 }

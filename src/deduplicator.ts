@@ -65,7 +65,7 @@ export class Deduplicator<T> {
     addHashes(this.db, hashes, this.shrink)
   }
 
-  async diff(values: T[]): Promise<T[]> {
+  async addAndDiff(values: T[]): Promise<T[]> {
     const hashes = await map(values, this.hash)
 
     const newHashes = addHashes(this.db, hashes, this.shrink)
@@ -79,7 +79,7 @@ export class Deduplicator<T> {
     }
   }
 
-  async lastDiff(value: T): Promise<boolean> {
+  async addAndDiffLast(value: T): Promise<boolean> {
     const hash = await this.hash(value)
 
     return addLastHash(this.db, hash, this.shrink)

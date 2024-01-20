@@ -17,7 +17,7 @@ describe('Deduplicator', () => {
       await deduplicator.add([])
       await deduplicator.add(['foo', 'bar'])
 
-      expect(await deduplicator.diff(['foo', 'bar'])).toStrictEqual([])
+      expect(await deduplicator.addAndDiff(['foo', 'bar'])).toStrictEqual([])
     })
 
     it('with custom hash', async () => {
@@ -27,7 +27,7 @@ describe('Deduplicator', () => {
 
       await deduplicator.add([123])
 
-      expect(await deduplicator.diff(['123'])).toStrictEqual([])
+      expect(await deduplicator.addAndDiff(['123'])).toStrictEqual([])
     })
 
     it('with shrink', async () => {
@@ -40,17 +40,17 @@ describe('Deduplicator', () => {
 
       await deduplicator.add([1, 2])
 
-      expect(await deduplicator.diff([1, 2])).toStrictEqual([1])
+      expect(await deduplicator.addAndDiff([1, 2])).toStrictEqual([1])
     })
   })
 
-  describe('diff', () => {
+  describe('addAndDiff', () => {
     it('default', async () => {
       const deduplicator = await Deduplicator.create<string>()
 
-      const result1 = await deduplicator.diff([])
-      const result2 = await deduplicator.diff(['foo'])
-      const result3 = await deduplicator.diff(['foo', 'bar'])
+      const result1 = await deduplicator.addAndDiff([])
+      const result2 = await deduplicator.addAndDiff(['foo'])
+      const result3 = await deduplicator.addAndDiff(['foo', 'bar'])
 
       expect(result1).toStrictEqual([])
       expect(result2).toStrictEqual(['foo'])
@@ -60,7 +60,7 @@ describe('Deduplicator', () => {
     it('edge: same elements', async () => {
       const deduplicator = await Deduplicator.create<string>()
 
-      const result = await deduplicator.diff(['foo', 'bar', 'foo'])
+      const result = await deduplicator.addAndDiff(['foo', 'bar', 'foo'])
 
       expect(result).toStrictEqual(['foo', 'bar'])
     })
@@ -70,8 +70,8 @@ describe('Deduplicator', () => {
         hash: toString
       })
 
-      const result1 = await deduplicator.diff([123])
-      const result2 = await deduplicator.diff(['123', 456])
+      const result1 = await deduplicator.addAndDiff([123])
+      const result2 = await deduplicator.addAndDiff(['123', 456])
 
       expect(result1).toStrictEqual([123])
       expect(result2).toStrictEqual([456])
@@ -85,21 +85,21 @@ describe('Deduplicator', () => {
         }
       })
 
-      const result1 = await deduplicator.diff([1, 2])
-      const result2 = await deduplicator.diff([1, 2])
+      const result1 = await deduplicator.addAndDiff([1, 2])
+      const result2 = await deduplicator.addAndDiff([1, 2])
 
       expect(result1).toStrictEqual([1, 2])
       expect(result2).toStrictEqual([1])
     })
   })
 
-  describe('lastDiff', () => {
+  describe('addAndDiffLast', () => {
     it('default', async () => {
       const deduplicator = await Deduplicator.create<string>()
 
-      const result1 = await deduplicator.lastDiff('foo')
-      const result2 = await deduplicator.lastDiff('foo')
-      const result3 = await deduplicator.lastDiff('bar')
+      const result1 = await deduplicator.addAndDiffLast('foo')
+      const result2 = await deduplicator.addAndDiffLast('foo')
+      const result3 = await deduplicator.addAndDiffLast('bar')
 
       expect(result1).toBe(true)
       expect(result2).toBe(false)
@@ -111,9 +111,9 @@ describe('Deduplicator', () => {
         hash: toString
       })
 
-      const result1 = await deduplicator.lastDiff(123)
-      const result2 = await deduplicator.lastDiff('123')
-      const result3 = await deduplicator.lastDiff(456)
+      const result1 = await deduplicator.addAndDiffLast(123)
+      const result2 = await deduplicator.addAndDiffLast('123')
+      const result3 = await deduplicator.addAndDiffLast(456)
 
       expect(result1).toBe(true)
       expect(result2).toBe(false)
@@ -129,10 +129,10 @@ describe('Deduplicator', () => {
       })
       await deduplicator.add([1])
 
-      const result = await deduplicator.lastDiff(2)
+      const result = await deduplicator.addAndDiffLast(2)
 
       expect(result).toBe(true)
-      expect(await deduplicator.diff([1, 2])).toStrictEqual([1])
+      expect(await deduplicator.addAndDiff([1, 2])).toStrictEqual([1])
     })
   })
 })

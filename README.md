@@ -1,5 +1,6 @@
-# Hallu
-Hallu是一个建立在Deno运行时上的数据去重库, 它专为提取新数据而设计.
+# deduplicator
+deduplicator is a data deduplication library built on Deno,
+which is designed for extracting new data.
 
 ## API
 ```ts

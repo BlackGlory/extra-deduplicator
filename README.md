@@ -1,5 +1,5 @@
-# deduplicator
-deduplicator is a data deduplication library built on Deno,
+# extra-deduplicator
+A data deduplication library for Deno,
 which is designed for extracting new data.
 
 ## API

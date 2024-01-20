@@ -2,7 +2,8 @@
   "version": "3",
   "packages": {
     "specifiers": {
-      "npm:migration-files@0.4.1": "npm:migration-files@0.4.1"
+      "npm:migration-files@0.4.1": "npm:migration-files@0.4.1",
+      "npm:migration-files@0.4.2": "npm:migration-files@0.4.2"
     },
     "npm": {
       "@blackglory/errors@2.4.3": {
@@ -193,6 +194,13 @@
       },
       "migration-files@0.4.1": {
         "integrity": "sha512-+xux/X33eAQJJijVTRFE0N2AB5CMxdLxTl7Yz9JMsu3BNxuXdA/dElxzA/JGZ3fquYYvrM+z6bKGOD7XBaNThQ==",
+        "dependencies": {
+          "@blackglory/prelude": "@blackglory/prelude@0.1.10",
+          "extra-sort": "extra-sort@0.1.2"
+        }
+      },
+      "migration-files@0.4.2": {
+        "integrity": "sha512-1slLY37I1fRDnaiX7nLYYtGsdtz94izt6M16wlrZczkyPErljCfb7jRlm1yeffL2O9aSTmRdPJ76y8aPtiddGg==",
         "dependencies": {
           "@blackglory/prelude": "@blackglory/prelude@0.1.10",
           "extra-sort": "extra-sort@0.1.2"

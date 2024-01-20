@@ -1,21 +1,30 @@
 import { Database } from 'https://deno.land/x/sqlite3@0.10.0/mod.ts'
 import { migrate } from './utils/migrate.ts'
-import { findMigrationFilenames, readMigrationFile } from 'npm:migration-files@0.4.1'
+import { parseMigrationFile } from 'npm:migration-files@0.4.2'
 import { map } from 'https://esm.sh/extra-promise@6.0.8'
-import { getModuleRoot } from './utils/get-module-root.ts'
-import * as path from 'https://deno.land/std@0.208.0/path/mod.ts'
 import { isFinite } from 'https://esm.sh/@blackglory/prelude@0.3.4'
+import { cache } from 'https://deno.land/x/cache@0.2.13/mod.ts'
 
 interface IShrinkOptions {
   target: number
   threshold: number
 }
 
+const migrationFiles = await map(
+  ['001-initial.sql']
+, async filename => {
+    const url = new URL(`../migrations/${filename}`, import.meta.url)
+    const file = await cache(url)
+    return file
+  }
+)
+
 export async function openDatabase(filename: string = ':memory:'): Promise<Database> {
-  const migrations = await map(
-    await findMigrationFilenames(path.join(getModuleRoot(), 'migrations'))
-  , readMigrationFile
-  )
+  const migrations = await map(migrationFiles, async file => {
+    const content = await Deno.readTextFile(file.path)
+    return parseMigrationFile(file.url.href, content)
+  })
+
   const db = new Database(filename)
   migrate(db, migrations)
 

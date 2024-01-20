@@ -2,7 +2,7 @@ import { Database } from 'https://deno.land/x/sqlite3@0.10.0/mod.ts'
 import { migrate } from './utils/migrate.ts'
 import { findMigrationFilenames, readMigrationFile } from 'npm:migration-files@0.4.1'
 import { map } from 'https://esm.sh/extra-promise@6.0.8'
-import { getAppRoot } from './utils/get-app-root.ts'
+import { getModuleRoot } from './utils/get-module-root.ts'
 import * as path from 'https://deno.land/std@0.208.0/path/mod.ts'
 import { isFinite } from 'https://esm.sh/@blackglory/prelude@0.3.4'
 
@@ -13,7 +13,7 @@ interface IShrinkOptions {
 
 export async function openDatabase(filename: string = ':memory:'): Promise<Database> {
   const migrations = await map(
-    await findMigrationFilenames(path.join(getAppRoot(), 'migrations'))
+    await findMigrationFilenames(path.join(getModuleRoot(), 'migrations'))
   , readMigrationFile
   )
   const db = new Database(filename)

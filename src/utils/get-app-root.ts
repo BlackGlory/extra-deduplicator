@@ -1,5 +1,5 @@
 import * as path from 'https://deno.land/std@0.208.0/path/mod.ts'
-import { isCompiled } from '@utils/is-compiled.ts'
+import { isCompiled } from './is-compiled.ts'
 
 export function getAppRoot(): string {
   // 项目中的模块路径(例如`import.meta.url`和`Deno.mainModule`)将在编译时被硬编码, 无法直接使用.

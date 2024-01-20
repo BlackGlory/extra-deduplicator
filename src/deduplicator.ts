@@ -1,7 +1,7 @@
 import { zip } from 'https://esm.sh/iterable-operator@4.0.6'
 import { isntEmptyArray, assert, Awaitable, isPositiveInfinity, isFinite } from 'https://esm.sh/@blackglory/prelude@0.3.4'
 import { map } from 'https://esm.sh/extra-promise@6.0.8'
-import { addHashes, addLastHash, openDatabase } from '@src/database.ts'
+import { addHashes, addLastHash, openDatabase } from './database.ts'
 import { Database } from 'https://deno.land/x/sqlite3@0.10.0/mod.ts'
 import { stringify } from 'https://esm.sh/extra-json-stable-stringify@0.1.2'
 import { sha256 } from 'https://esm.sh/extra-compatible@0.2.2'

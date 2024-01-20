@@ -1,8 +1,8 @@
 import { Database } from 'https://deno.land/x/sqlite3@0.10.0/mod.ts'
-import { migrate } from '@utils/migrate.ts'
+import { migrate } from './utils/migrate.ts'
 import { findMigrationFilenames, readMigrationFile } from 'npm:migration-files@0.4.1'
 import { map } from 'https://esm.sh/extra-promise@6.0.8'
-import { getAppRoot } from '@utils/get-app-root.ts'
+import { getAppRoot } from './utils/get-app-root.ts'
 import * as path from 'https://deno.land/std@0.208.0/path/mod.ts'
 import { isFinite } from 'https://esm.sh/@blackglory/prelude@0.3.4'
 

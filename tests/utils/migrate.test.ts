@@ -1,5 +1,5 @@
-import { describe, it } from 'https://deno.land/std@0.208.0/testing/bdd.ts'
-import { expect } from 'https://deno.land/std@0.208.0/expect/mod.ts'
+import { describe, it } from 'https://deno.land/std@0.214.0/testing/bdd.ts'
+import { expect } from 'https://deno.land/std@0.214.0/expect/mod.ts'
 import { Database } from 'https://deno.land/x/sqlite3@0.10.0/mod.ts'
 import { migrate, IMigration } from '@utils/migrate.ts'
 
@@ -79,7 +79,6 @@ describe('migrate', () => {
       expect(versionBefore).toBe(0)
       expect(versionAfter).toBe(2)
       expect(tables).toEqual(['test'])
-      // @ts-ignore https://github.com/denoland/deno_std/issues/4190
       expect(schema).toMatchObject([
         {
           name: 'id'

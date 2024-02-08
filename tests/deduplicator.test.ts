@@ -1,4 +1,4 @@
-import { describe, it } from 'https://deno.land/std@0.208.0/testing/bdd.ts'
+import { describe, it } from 'https://deno.land/std@0.214.0/testing/bdd.ts'
 import { expect } from 'https://deno.land/std@0.212.0/expect/mod.ts'
 import { Deduplicator } from '@src/deduplicator.ts'
 import { toString } from 'https://esm.sh/@blackglory/prelude@0.3.4'

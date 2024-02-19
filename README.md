@@ -2,6 +2,17 @@
 A data deduplication library for Deno,
 which is designed for extracting new data.
 
+## Usage
+```ts
+#!/usr/bin/envw -S deno run --allow-all --unstable-ffi
+import { Deduplicator } from 'https://deno.land/x/extra_deduplicator@VERSION/mod.ts'
+
+const deduplicator = await Deduplicator.create({ filename: 'dedup.db' })
+
+const records = ['record-1', 'record-2']
+const newRecords = await deduplicator.addAndDidff(records)
+```
+
 ## API
 ```ts
 interface IOptions<T> {

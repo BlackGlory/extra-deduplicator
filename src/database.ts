@@ -31,6 +31,31 @@ export async function openDatabase(filename = ':memory:'): Promise<Database> {
   return db
 }
 
+export function hasHashes(db: Database, hashes: string[]): boolean[] {
+  return hashes.map(hash => {
+    const row = db.prepare(`
+      SELECT EXISTS(
+        SELECT *
+         FROM hash
+        WHERE hash = $hash
+      ) AS hash_exists
+    `).get<{ hash_exists: number }>({ $hash: hash })
+
+    return !!row?.hash_exists
+  })
+}
+
+export function isLastHash(db: Database, hash: string): boolean {
+  const row = db.prepare(`
+    SELECT hash
+      FROM hash
+     ORDER BY id DESC
+     LIMIT 1
+  `).get<{ hash: string }>()
+
+  return row?.hash === hash
+}
+
 export function addHashes(
   db: Database
 , hashes: string[]

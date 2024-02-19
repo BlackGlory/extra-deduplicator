@@ -4,6 +4,6 @@
   , "@utils/": "./src/utils/"
   }
 , "tasks": {
-    "test": "deno test --allow-all --unstable"
+    "test": "deno test --allow-all --unstable-ffi"
   }
 }

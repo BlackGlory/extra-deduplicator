@@ -1,4 +1,4 @@
-import { Database } from 'https://deno.land/x/sqlite3@0.10.0/mod.ts'
+import { Database } from 'https://deno.land/x/sqlite3@0.11.1/mod.ts'
 import { migrate } from './utils/migrate.ts'
 import { parseMigrationFile } from 'npm:migration-files@0.4.2'
 import { map } from 'https://esm.sh/extra-promise@6.0.8'

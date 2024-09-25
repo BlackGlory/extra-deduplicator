@@ -1,6 +1,6 @@
 import { describe, it } from 'https://deno.land/std@0.214.0/testing/bdd.ts'
 import { expect } from 'https://deno.land/std@0.214.0/expect/mod.ts'
-import { Database } from 'https://deno.land/x/sqlite3@0.11.1/mod.ts'
+import { Database } from 'https://deno.land/x/sqlite3@0.12.0/mod.ts'
 import { migrate, IMigration } from '@utils/migrate.ts'
 
 const migrations: IMigration[] = [

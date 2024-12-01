@@ -1,5 +1,5 @@
-import { Database } from 'https://deno.land/x/sqlite3@0.12.0/mod.ts'
-import { assert, isFunction } from 'https://esm.sh/@blackglory/prelude@0.3.4'
+import { Database } from '@db/sqlite'
+import { assert, isFunction } from '@blackglory/prelude'
 
 export interface IMigration {
   version: number

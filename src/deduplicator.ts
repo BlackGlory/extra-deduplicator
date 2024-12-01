@@ -1,10 +1,10 @@
-import { toArray, uniq, zip } from 'https://esm.sh/iterable-operator@4.0.6'
-import { isntEmptyArray, assert, Awaitable, isPositiveInfinity, isFinite } from 'https://esm.sh/@blackglory/prelude@0.3.4'
-import { map } from 'https://esm.sh/extra-promise@6.0.8'
+import { toArray, uniq, zip } from 'iterable-operator'
+import { isntEmptyArray, assert, Awaitable, isPositiveInfinity, isFinite } from '@blackglory/prelude'
+import { map } from 'extra-promise'
 import { openDatabase, hasHashes, isLastHash, addHashes, addLastHash } from './database.ts'
-import { Database } from 'https://deno.land/x/sqlite3@0.12.0/mod.ts'
-import { stringify } from 'https://esm.sh/extra-json-stable-stringify@0.1.2'
-import { sha256 } from 'https://esm.sh/extra-compatible@0.2.2'
+import { Database } from '@db/sqlite'
+import { stringify } from 'extra-json-stable-stringify'
+import { sha256 } from 'extra-compatible'
 
 export interface IOptions<T> {
   filename?: string

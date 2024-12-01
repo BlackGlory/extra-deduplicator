@@ -5,7 +5,7 @@ which is designed for extracting new data.
 ## Usage
 ```ts
 #!/usr/bin/env -S deno run --allow-all --unstable-ffi
-import { Deduplicator } from 'https://deno.land/x/extra_deduplicator@VERSION/mod.ts'
+import { Deduplicator } from 'jsr:@blackglory/deduplicator'
 
 const deduplicator = await Deduplicator.create({ filename: 'dedup.db' })
 

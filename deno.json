@@ -1,9 +1,23 @@
 {
+  "name": "@blackglory/deduplicator",
+  "version": "0.2.0",
+  "license": "MIT",
+  "exports": "./mod.ts",
   "imports": {
-    "@src/": "./src/"
-  , "@utils/": "./src/utils/"
-  }
-, "tasks": {
+    "@blackglory/prelude": "npm:@blackglory/prelude@^0.4.0",
+    "@denosaurs/cache": "jsr:@denosaurs/cache@^0.2.15",
+    "@src/": "./src/",
+    "@std/expect": "jsr:@std/expect@^1.0.8",
+    "@std/testing": "jsr:@std/testing@^1.0.5",
+    "@utils/": "./src/utils/",
+    "@db/sqlite": "jsr:@db/sqlite@^0.12.0",
+    "extra-compatible": "npm:extra-compatible@^0.2.2",
+    "extra-json-stable-stringify": "npm:extra-json-stable-stringify@^0.1.2",
+    "extra-promise": "npm:extra-promise@^7.0.0",
+    "iterable-operator": "npm:iterable-operator@^5.1.0",
+    "migration-files": "npm:migration-files@^0.4.3"
+  },
+  "tasks": {
     "test": "deno test --allow-all --unstable-ffi"
   }
 }

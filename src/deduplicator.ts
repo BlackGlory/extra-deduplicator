@@ -1,8 +1,8 @@
 import { toArray, uniq, zip } from 'iterable-operator'
-import { isntEmptyArray, assert, Awaitable, isPositiveInfinity, isFinite } from '@blackglory/prelude'
+import { isntEmptyArray, assert, type Awaitable, isPositiveInfinity, isFinite } from '@blackglory/prelude'
 import { map } from 'extra-promise'
 import { openDatabase, hasHashes, isLastHash, addHashes, addLastHash } from './database.ts'
-import { Database } from '@db/sqlite'
+import type { Database } from '@db/sqlite'
 import { stringify } from 'extra-json-stable-stringify'
 import { sha256 } from 'extra-compatible'
 

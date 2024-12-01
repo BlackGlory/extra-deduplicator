@@ -1,7 +1,7 @@
 import { describe, it } from '@std/testing/bdd'
 import { expect } from '@std/expect'
 import { Database } from '@db/sqlite'
-import { migrate, IMigration } from '@utils/migrate.ts'
+import { migrate, type IMigration } from '@utils/migrate.ts'
 
 const migrations: IMigration[] = [
   {

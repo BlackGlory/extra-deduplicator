@@ -2,21 +2,20 @@
   "version": "4",
   "specifiers": {
     "jsr:@db/sqlite@0.12": "0.12.0",
-    "jsr:@denosaurs/cache@~0.2.15": "0.2.15",
     "jsr:@denosaurs/plug@1": "1.0.6",
     "jsr:@std/assert@0.217": "0.217.0",
     "jsr:@std/assert@0.221": "0.221.0",
     "jsr:@std/assert@^1.0.8": "1.0.8",
+    "jsr:@std/data-structures@^1.0.4": "1.0.4",
     "jsr:@std/encoding@0.221": "0.221.0",
     "jsr:@std/expect@^1.0.8": "1.0.8",
     "jsr:@std/fmt@0.221": "0.221.0",
     "jsr:@std/fs@0.221": "0.221.0",
-    "jsr:@std/fs@1.0.4": "1.0.4",
+    "jsr:@std/fs@^1.0.5": "1.0.6",
     "jsr:@std/internal@^1.0.5": "1.0.5",
     "jsr:@std/path@0.217": "0.217.0",
     "jsr:@std/path@0.221": "0.221.0",
-    "jsr:@std/path@1.0.6": "1.0.6",
-    "jsr:@std/path@^1.0.6": "1.0.6",
+    "jsr:@std/path@^1.0.8": "1.0.8",
     "jsr:@std/testing@^1.0.5": "1.0.5",
     "npm:@blackglory/prelude@0.4": "0.4.0",
     "npm:extra-compatible@~0.2.2": "0.2.2",
@@ -31,13 +30,6 @@
       "dependencies": [
         "jsr:@denosaurs/plug",
         "jsr:@std/path@0.217"
-      ]
-    },
-    "@denosaurs/cache@0.2.15": {
-      "integrity": "c5abe7477ef5705ff7d3dbade3380a1b6cf82e3d4cb4755068a525a75cda987b",
-      "dependencies": [
-        "jsr:@std/fs@1.0.4",
-        "jsr:@std/path@1.0.6"
       ]
     },
     "@denosaurs/plug@1.0.6": {
@@ -61,6 +53,9 @@
         "jsr:@std/internal"
       ]
     },
+    "@std/data-structures@1.0.4": {
+      "integrity": "fa0e20c11eb9ba673417450915c750a0001405a784e2a4e0c3725031681684a0"
+    },
     "@std/encoding@0.221.0": {
       "integrity": "d1dd76ef0dc5d14088411e6dc1dede53bf8308c95d1537df1214c97137208e45"
     },
@@ -81,10 +76,10 @@
         "jsr:@std/path@0.221"
       ]
     },
-    "@std/fs@1.0.4": {
-      "integrity": "2907d32d8d1d9e540588fd5fe0ec21ee638134bd51df327ad4e443aaef07123c",
+    "@std/fs@1.0.6": {
+      "integrity": "42b56e1e41b75583a21d5a37f6a6a27de9f510bcd36c0c85791d685ca0b85fa2",
       "dependencies": [
-        "jsr:@std/path@^1.0.6"
+        "jsr:@std/path@^1.0.8"
       ]
     },
     "@std/internal@1.0.5": {
@@ -102,14 +97,17 @@
         "jsr:@std/assert@0.221"
       ]
     },
-    "@std/path@1.0.6": {
-      "integrity": "ab2c55f902b380cf28e0eec501b4906e4c1960d13f00e11cfbcd21de15f18fed"
+    "@std/path@1.0.8": {
+      "integrity": "548fa456bb6a04d3c1a1e7477986b6cffbce95102d0bb447c67c4ee70e0364be"
     },
     "@std/testing@1.0.5": {
       "integrity": "6e693cbec94c81a1ad3df668685c7ba8e20742bb10305bc7137faa5cf16d2ec4",
       "dependencies": [
         "jsr:@std/assert@^1.0.8",
-        "jsr:@std/internal"
+        "jsr:@std/data-structures",
+        "jsr:@std/fs@^1.0.5",
+        "jsr:@std/internal",
+        "jsr:@std/path@^1.0.8"
       ]
     }
   },
@@ -510,7 +508,6 @@
   "workspace": {
     "dependencies": [
       "jsr:@db/sqlite@0.12",
-      "jsr:@denosaurs/cache@~0.2.15",
       "jsr:@std/expect@^1.0.8",
       "jsr:@std/testing@^1.0.5",
       "npm:@blackglory/prelude@0.4",

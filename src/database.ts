@@ -2,7 +2,7 @@ import { Database } from '@db/sqlite'
 import { migrate } from './utils/migrate.ts'
 import { parseMigrationFile } from 'migration-files'
 import { map } from 'extra-promise'
-import { isFinite } from '@blackglory/prelude'
+import { assert, isFinite } from '@blackglory/prelude'
 
 interface IShrinkOptions {
   target: number
@@ -112,13 +112,26 @@ export function addLastHash(
 
 function shrink(db: Database, options: IShrinkOptions): void {
   if (isFinite(options.threshold)) {
-    db.prepare(`
-      DELETE FROM hash
-       ORDER BY id ASC
-       LIMIT (
-               SELECT COUNT(*) as count
-                 FROM hash
-             ) - $target
-    `).run({ $target: options.target })
+    db.transaction(() => {
+      const count = countHashes(db)
+
+      if (count >= options.threshold) {
+        db.prepare(`
+          DELETE FROM hash
+           ORDER BY id ASC
+           LIMIT $limit
+        `).run({ $limit: count - options.target })
+      }
+    })()
   }
+}
+
+function countHashes(db: Database): number {
+  const row = db.prepare(`
+    SELECT COUNT(*) as count
+      FROM hash
+  `).get<{ count: number }>()
+  assert(row)
+
+  return row.count
 }

@@ -1,6 +1,7 @@
 {
-  "version": "4",
+  "version": "5",
   "specifiers": {
+    "jsr:@blackglory/sqlite-migrations@0.1": "0.1.0",
     "jsr:@db/sqlite@0.12": "0.12.0",
     "jsr:@denosaurs/plug@1": "1.0.6",
     "jsr:@std/assert@0.217": "0.217.0",
@@ -25,6 +26,13 @@
     "npm:migration-files@~0.4.3": "0.4.3"
   },
   "jsr": {
+    "@blackglory/sqlite-migrations@0.1.0": {
+      "integrity": "e1acf1c268cc0b48eb0aed46d552a0e7340b5fc2e48cd39fbcddb88df7e22080",
+      "dependencies": [
+        "jsr:@db/sqlite",
+        "npm:@blackglory/prelude"
+      ]
+    },
     "@db/sqlite@0.12.0": {
       "integrity": "dd1ef7f621ad50fc1e073a1c3609c4470bd51edc0994139c5bf9851de7a6d85f",
       "dependencies": [
@@ -507,6 +515,7 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@blackglory/sqlite-migrations@0.1",
       "jsr:@db/sqlite@0.12",
       "jsr:@std/expect@^1.0.8",
       "jsr:@std/testing@^1.0.5",

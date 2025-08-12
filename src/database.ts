@@ -1,5 +1,5 @@
 import { Database } from '@db/sqlite'
-import { migrate } from './utils/migrate.ts'
+import { migrate } from '@blackglory/sqlite-migrations'
 import { parseMigrationFile } from 'migration-files'
 import { map } from 'extra-promise'
 import { assert, isFinite } from '@blackglory/prelude'

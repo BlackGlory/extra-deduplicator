@@ -17,6 +17,6 @@
     "migration-files": "npm:migration-files@^0.4.3"
   },
   "tasks": {
-    "test": "deno test --allow-all --unstable-ffi"
+    "test": "deno test --allow-all"
   }
 }

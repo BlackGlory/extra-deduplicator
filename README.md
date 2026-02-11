@@ -2,6 +2,11 @@
 A data deduplication library for Deno,
 which is designed for extracting new data.
 
+## Install
+```sh
+deno add jsr:@blackglory/deduplicator
+```
+
 ## Usage
 ```ts
 #!/usr/bin/env -S deno run --allow-all

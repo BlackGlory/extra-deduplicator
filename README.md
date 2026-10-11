@@ -1,16 +1,14 @@
 # extra-deduplicator
-A data deduplication library for Deno,
-which is designed for extracting new data.
+A data deduplication library, which is designed for extracting new data.
 
 ## Install
 ```sh
-deno add jsr:@blackglory/deduplicator
+npm install --save extra-deduplicator
 ```
 
 ## Usage
 ```ts
-#!/usr/bin/env -S deno run --allow-all
-import { Deduplicator } from 'jsr:@blackglory/deduplicator'
+import { Deduplicator } from 'extra-deduplicator'
 
 const deduplicator = await Deduplicator.create({ filename: 'dedup.db' })
 

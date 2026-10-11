@@ -1,17 +1,16 @@
-import { describe, it } from '@std/testing/bdd'
-import { expect } from '@std/expect'
-import { Deduplicator } from '@src/deduplicator.ts'
+import { describe, test, expect } from 'vitest'
+import { Deduplicator } from '@src/deduplicator.js'
 import { toString } from '@blackglory/prelude'
 
 describe('Deduplicator', () => {
-  it('create, close', async () => {
+  test('create, close', async () => {
     const deduplicator = await Deduplicator.create()
 
     deduplicator.close()
   })
 
   describe('add', () => {
-    it('default', async () => {
+    test('default', async () => {
       const deduplicator = await Deduplicator.create<string>()
 
       await deduplicator.add([])
@@ -20,7 +19,7 @@ describe('Deduplicator', () => {
       expect(await deduplicator.addAndDiff(['foo', 'bar'])).toStrictEqual([])
     })
 
-    it('with custom hash', async () => {
+    test('with custom hash', async () => {
       const deduplicator = await Deduplicator.create<string | number>({
         hash: toString
       })
@@ -30,7 +29,7 @@ describe('Deduplicator', () => {
       expect(await deduplicator.addAndDiff(['123'])).toStrictEqual([])
     })
 
-    it('with shrink', async () => {
+    test('with shrink', async () => {
       const deduplicator = await Deduplicator.create<number>({
         shrink: {
           target: 1
@@ -45,7 +44,7 @@ describe('Deduplicator', () => {
   })
 
   describe('diff', () => {
-    it('default', async () => {
+    test('default', async () => {
       const deduplicator = await Deduplicator.create<string>()
       await deduplicator.add(['foo'])
 
@@ -56,7 +55,7 @@ describe('Deduplicator', () => {
       expect(result2).toStrictEqual(['bar'])
     })
 
-    it('edge: same elements', async () => {
+    test('edge: same elements', async () => {
       const deduplicator = await Deduplicator.create<string>()
 
       const result = await deduplicator.diff(['foo', 'bar', 'foo'])
@@ -64,7 +63,7 @@ describe('Deduplicator', () => {
       expect(result).toStrictEqual(['foo', 'bar'])
     })
 
-    it('with custom hash', async () => {
+    test('with custom hash', async () => {
       const deduplicator = await Deduplicator.create<string | number>({
         hash: toString
       })
@@ -77,7 +76,7 @@ describe('Deduplicator', () => {
   })
 
   describe('diffLast', () => {
-    it('default', async () => {
+    test('default', async () => {
       const deduplicator = await Deduplicator.create<string>()
       await deduplicator.add(['foo'])
 
@@ -90,7 +89,7 @@ describe('Deduplicator', () => {
       expect(result3).toBe(true)
     })
 
-    it('with custom hash', async () => {
+    test('with custom hash', async () => {
       const deduplicator = await Deduplicator.create<string | number>({
         hash: toString
       })
@@ -105,7 +104,7 @@ describe('Deduplicator', () => {
   })
 
   describe('addAndDiff', () => {
-    it('default', async () => {
+    test('default', async () => {
       const deduplicator = await Deduplicator.create<string>()
 
       const result1 = await deduplicator.addAndDiff([])
@@ -117,7 +116,7 @@ describe('Deduplicator', () => {
       expect(result3).toStrictEqual(['bar'])
     })
 
-    it('edge: same elements', async () => {
+    test('edge: same elements', async () => {
       const deduplicator = await Deduplicator.create<string>()
 
       const result = await deduplicator.addAndDiff(['foo', 'bar', 'foo'])
@@ -125,7 +124,7 @@ describe('Deduplicator', () => {
       expect(result).toStrictEqual(['foo', 'bar'])
     })
 
-    it('with custom hash', async () => {
+    test('with custom hash', async () => {
       const deduplicator = await Deduplicator.create<string | number>({
         hash: toString
       })
@@ -137,7 +136,7 @@ describe('Deduplicator', () => {
       expect(result2).toStrictEqual([456])
     })
 
-    it('with shrink', async () => {
+    test('with shrink', async () => {
       const deduplicator = await Deduplicator.create<number>({
         shrink: {
           target: 1
@@ -154,7 +153,7 @@ describe('Deduplicator', () => {
   })
 
   describe('addAndDiffLast', () => {
-    it('default', async () => {
+    test('default', async () => {
       const deduplicator = await Deduplicator.create<string>()
 
       const result1 = await deduplicator.addAndDiffLast('foo')
@@ -166,7 +165,7 @@ describe('Deduplicator', () => {
       expect(result3).toBe(true)
     })
 
-    it('with custom hash', async () => {
+    test('with custom hash', async () => {
       const deduplicator = await Deduplicator.create<string | number>({
         hash: toString
       })
@@ -180,7 +179,7 @@ describe('Deduplicator', () => {
       expect(result3).toBe(true)
     })
 
-    it('with shrink', async () => {
+    test('with shrink', async () => {
       const deduplicator = await Deduplicator.create<number>({
         shrink: {
           target: 1
